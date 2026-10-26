@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevMode — Discover Your Developer Personality</title>
+  <meta name="description" content="A 10-question quiz that reveals what kind of programmer you really are." />
+  <meta name="theme-color" content="#08090b" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Fonts (the site still works offline with system fallbacks) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <a class="brand" href="#" id="brand-link" aria-label="DevMode home">
+      <img src="favicon.svg" alt="" width="28" height="28" />
+      <span>Dev<span class="accent-green">Mode</span></span>
+    </a>
+    <span class="header-status"><span class="status-dot"></span>v1.0.0 · online</span>
+  </header>
+
+  <main class="app" id="app">
+
+    <!-- ============ SCREEN 1: START ============ -->
+    <section class="screen is-active" id="screen-start" aria-labelledby="start-title">
+      <p class="eyebrow">// personality.exe</p>
+      <h1 id="start-title">Discover your<br /><span class="gradient-text">developer personality</span></h1>
+      <p class="lead">
+        10 questions. 6 possible results. Zero judgement (okay, a little).
+        Find out what kind of programmer you <em>really</em> are.
+      </p>
+
+      <div class="terminal" aria-hidden="true">
+        <div class="terminal-bar">
+          <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          <span class="terminal-title">~/devmode — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="prompt">$</span> npm run discover-yourself</p>
+          <p class="muted">&gt; scanning coffee levels... <span class="accent-green">done</span></p>
+          <p class="muted">&gt; counting open browser tabs... <span class="accent-purple">47</span></p>
+          <p class="muted">&gt; loading personality modules... <span class="accent-green">6 found</span></p>
+          <p><span class="prompt">$</span> <span class="cursor"></span></p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="start-btn" type="button">
+        Start the quiz <span aria-hidden="true">→</span>
+      </button>
+      <p class="hint">~2 minutes · Tip: use keys <kbd>1</kbd>–<kbd>4</kbd> and <kbd>Enter</kbd></p>
+    </section>
+
+    <!-- ============ SCREEN 2: QUIZ ============ -->
+    <section class="screen" id="screen-quiz" aria-labelledby="question-text">
+      <div class="progress-header">
+        <span class="progress-label" id="progress-label">Question 1 / 10</span>
+        <span class="progress-percent" id="progress-percent">0%</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="card question-card" id="question-card">
+        <p class="eyebrow" id="question-eyebrow">// question_01</p>
+        <h2 class="question-text" id="question-text" aria-live="polite">Loading…</h2>
+        <div class="options" id="options" role="group" aria-labelledby="question-text">
+          <!-- Answer buttons are created by script.js -->
+        </div>
+      </div>
+
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="back-btn" type="button"><span aria-hidden="true">←</span> Back</button>
+        <button class="btn btn-primary" id="next-btn" type="button" disabled>Next <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 3: RESULT ============ -->
+    <section class="screen" id="screen-result" aria-labelledby="result-name">
+      <p class="eyebrow">// compile complete · 0 errors · <span id="result-warnings">3</span> warnings</p>
+
+      <div class="card result-hero">
+        <div class="result-icon" id="result-icon" aria-hidden="true">🤖</div>
+        <p class="result-kicker">You are…</p>
+        <h2 class="result-name" id="result-name">The AI-Powered Coder</h2>
+        <p class="result-tagline" id="result-tagline"></p>
+        <p class="result-description" id="result-description"></p>
+        <code class="result-command" id="result-command"></code>
+      </div>
+
+      <div class="result-grid">
+        <div class="card list-card">
+          <h3><span class="accent-green">+</span> Strengths</h3>
+          <ul class="trait-list trait-good" id="result-strengths"></ul>
+        </div>
+        <div class="card list-card">
+          <h3><span class="accent-purple">−</span> Weaknesses</h3>
+          <ul class="trait-list trait-bad" id="result-weaknesses"></ul>
+        </div>
+      </div>
+
+      <div class="card stats-card">
+        <h3>Developer stat sheet</h3>
+        <p class="card-sub">Officially certified by absolutely no one.</p>
+        <div class="stats" id="result-stats"></div>
+      </div>
+
+      <div class="card stats-card">
+        <h3>Personality breakdown</h3>
+        <p class="card-sub">How your answers were distributed across all six types.</p>
+        <div class="breakdown" id="result-breakdown"></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="copy-btn" type="button">Copy results</button>
+        <button class="btn btn-secondary" id="share-btn" type="button">Share</button>
+        <button class="btn btn-ghost" id="retake-btn" type="button">↻ Retake quiz</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built with HTML, CSS &amp; vanilla JS · <span class="muted">no frameworks were harmed</span></p>
+  </footer>
+
+  <!-- Small pop-up message used for "Copied!" feedback -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
